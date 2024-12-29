@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Job Vacancy - Admin</title>
+    <style>
+      /* Global Styles */
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #333;
+      }
+
+      /* Container for the form */
+      .form-container {
+        width: 100%;
+        max-width: 600px;
+        padding: 40px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+        box-sizing: border-box;
+      }
+
+      /* Title Style */
+      .form-container h1 {
+        color: #093561;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      /* Form Inputs Style */
+      .form-container input[type="text"],
+      .form-container input[type="url"],
+      .form-container textarea {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+        box-sizing: border-box;
+      }
+
+      .form-container textarea {
+        resize: vertical;
+      }
+
+      /* Button Style */
+      .form-container button {
+        background: #093561;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .form-container button:hover {
+        background: #f7a308;
+      }
+
+      /* Back to Admin Home Button */
+      .back-btn {
+        display: block;
+        margin-top: 20px;
+        font-size: 1rem;
+        text-align: center;
+        color: #093561;
+        text-decoration: none;
+      }
+
+      .back-btn:hover {
+        text-decoration: underline;
+      }
+
+      /* Card Layout for Job Listings */
+      .job-cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 30px;
+      }
+
+      .job-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 250px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .job-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .job-card h3 {
+        color: #093561;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+
+      .job-card p {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 10px;
+      }
+
+      .job-card .salary {
+        color: #f7a308;
+        font-weight: bold;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .form-container {
+          padding: 20px;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="url"],
+        .form-container textarea {
+          padding: 10px;
+        }
+
+        .form-container button {
+          padding: 10px;
+        }
+
+        .job-cards-container {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h1>Add New Job Vacancy</h1>
+      <form id="add-job-form">
+        <input type="text" id="job-title" placeholder="Job Title" required />
+        <textarea id="job-description" rows="4" placeholder="Job Description" required></textarea>
+        <input type="text" id="job-location" placeholder="Job Location" required />
+        <input type="text" id="job-salary" placeholder="Salary Range" required />
+        <button type="submit">Add Job Vacancy</button>
+      </form>
+
+      <a href="adminhome.html" class="back-btn">Back to Admin Home</a>
+    </div>
+
+    <div class="job-cards-container" id="job-cards-container">
+      <!-- Job cards will be displayed here -->
+    </div>
+
+    <script>
+      document.getElementById('add-job-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const title = document.getElementById('job-title').value;
+        const description = document.getElementById('job-description').value;
+        const location = document.getElementById('job-location').value;
+        const salary = document.getElementById('job-salary').value;
+
+        try {
+          const response = await fetch('http://localhost:5000/job-vacancies', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title, description, location, salary }),
+          });
+
+          const data = await response.json();
+          if (response.ok) {
+            alert('Job vacancy added successfully!');
+          } else {
+            alert(data.message || 'Failed to add job vacancy');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Server error occurred. Please try again later.');
+        }
+      });
+    </script>
+  </body>
+</html>

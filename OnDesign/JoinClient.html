@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join as a Client or Freelancer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background-color: #1c1c1c;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .navbar .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .navbar .menu-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .navbar .menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar .menu a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .navbar .menu a:hover {
+            color: #ffcc00;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown button {
+            background-color: #f7a308;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown button:hover {
+            background-color: #f9bb48;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .dropdown-content a {
+            color: #004d99;
+            padding: 10px 15px;
+            display: block;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #1c1c1c;
+            color: white;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            transition: left 0.3s ease;
+            padding-top: 60px;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            display: block;
+            transition: color 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            color: #ffcc00;
+        }
+
+        .menu-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .menu-icon:hover {
+            color: #ffcc00;
+        }
+
+        .close-sidebar {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+            background-color: transparent;
+            border: none;
+        }
+
+        .close-sidebar:hover {
+            color: #ffcc00;
+        }
+
+        .container {
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            margin: auto;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .options {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 0.75rem;
+            cursor: pointer;
+        }
+
+        .option input {
+            display: none;
+        }
+
+        .option .icon {
+            font-size: 1.5rem;
+        }
+
+        .option .text {
+            font-size: 1rem;
+            flex: 1;
+            text-align: left;
+        }
+
+        .option input:checked + .icon,
+        .option input:checked + .text:hover {
+            color: #1bff1b;
+            font-weight: bold;
+        }
+
+        #joinButton {
+            background-color: #1c1c1c;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        #joinButton:hover {
+            background-color: #ffcc00;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            background-color: #1c1c1c;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #f7a308;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-wrapper">
+            <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+            <a style="text-decoration: none;color: white;" href="HomePage.html"><div class="logo">OnDesign</div></a>
+        </div>
+        <div class="menu-wrapper">
+            <div class="menu">
+                <a href="HomePage.html">Home</a>
+                <a href="Courses.html">Courses</a>
+                <a href="Profile.html">Profile</a>
+            </div>
+            <div class="dropdown">
+                <button>Switch</button>
+                <div class="dropdown-content">
+                    <a href="join_client.html">Switch to Professional Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+        <button class="close-sidebar" onclick="toggleSidebar()">&times;</button>
+        <ul>
+            <li><a href="Profile.html">Profiles</a></li>
+            <li><a href="Courses.html">My Courses</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </div>  
+
+    <div class="container">
+        <h1>Join as a client or freelancer</h1>
+        <div class="options">
+            <label class="option">
+                <input type="radio" name="role" value="client" checked>
+                <a href="Sign_Up2.html" style="text-decoration: none; color: black;">
+                    <span class="icon">👤</span>
+                    <span class="text" >I'm a client, hiring for a project</span>
+                </a>
+            </label>
+            <label class="option">
+                <input type="radio" name="role" value="freelancer">
+                <a href="Sign_Up.html" style="text-decoration: none; color: black;">
+                    <span class="icon">👤</span>
+                     <span class="text" >I'm a freelancer, looking for work</span>
+                </a>
+            </label>
+        </div>
+        <button id="joinButton" >Join as a Client</button>
+        <p>Already have an account? <a href="#">Log In</a></p>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-logo">OnDesign</div>
+        <div class="footer-links">
+            <a href="https://www.instagram.com" target="_blank">Instagram</a>
+            <a href="https://www.youtube.com" target="_blank">YouTube</a>
+            <a href="https://www.twitter.com" target="_blank">X (Twitter)</a>
+            <a href="https://www.whatsapp.com" target="_blank">WhatsApp</a>
+        </div>
+    </footer>
+
+    <script src="scripts/join_client.js"></script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

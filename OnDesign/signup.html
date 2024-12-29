@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up Form</title>
+    <style>
+      /* Styles remain unchanged */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f9f9f9;
+      }
+
+      .signup-form {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .social-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 1rem;
+      }
+
+      .social-buttons a {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .apple-button {
+        background-color: #000;
+        color: #fff;
+      }
+
+      .google-button {
+        background-color: #4285f4;
+        color: #fff;
+      }
+
+      .facebook-button {
+        background-color: #3b5998;
+        color: #fff;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 10px;
+      }
+
+      .name-container {
+        display: flex;
+        gap: 10px;
+      }
+
+      .name-container input {
+        flex: 1;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 0.9rem;
+      }
+
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 0.9rem;
+      }
+
+      button.submit-button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      button.submit-button:hover {
+        background-color: #0056b3;
+      }
+
+      .footer {
+        font-size: 0.9rem;
+        margin-top: 10px;
+      }
+
+      .footer a {
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="signup-form">
+      <h1>Sign up to find work you love</h1>
+
+      <div class="social-buttons">
+        <a href="https://appleid.apple.com" target="_blank" class="apple-button"
+          >Continue with Apple</a
+        >
+        <a
+          href="https://accounts.google.com"
+          target="_blank"
+          class="google-button"
+          >Continue with Google</a
+        >
+        <a
+          href="https://www.facebook.com/login"
+          target="_blank"
+          class="facebook-button"
+          >Continue with Facebook</a
+        >
+      </div>
+
+      <p>or</p>
+
+      <form id="signup-form">
+        <div class="name-container">
+          <input
+            type="text"
+            name="firstName"
+            id="firstName"
+            placeholder="First name"
+            required
+          />
+          <input
+            type="text"
+            name="lastName"
+            id="lastName"
+            placeholder="Last name"
+            required
+          />
+        </div>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Email"
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password (8 or more characters)"
+          required
+        />
+        <select name="country" id="country" required>
+          <option value="">Country</option>
+          <option value="India">India</option>
+          <option value="USA">USA</option>
+          <option value="Canada">Canada</option>
+        </select>
+        <button type="submit" class="submit-button">Create my account</button>
+      </form>
+
+      <div class="footer">Already have an account? <a href="login.html">Log in</a></div>
+    </div>
+
+    <script>
+      document
+        .getElementById("signup-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault(); // Prevent the default form submission
+
+          // Get form values
+          const firstName = document.getElementById("firstName").value;
+          const lastName = document.getElementById("lastName").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const country = document.getElementById("country").value;
+
+          const userData = {
+            firstName,
+            lastName,
+            email,
+            password,
+            country,
+          };
+
+          try {
+            const response = await fetch("http://localhost:5000/api/register", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userData),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+              alert(result.message);
+              // Optionally redirect to a login page or home page
+              window.location.href = "login.html"; // Example
+            } else {
+              alert(result.message);
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred. Please try again.");
+          }
+        });
+    </script>
+  </body>
+</html>

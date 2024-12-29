@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Vacancies - OnDesign</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background-color: #1c1c1c;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .menu a:hover {
+            color: #f7a308;
+        }
+
+        .jobs-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 15px;
+            transition: box-shadow 0.3s, border-color 0.3s;
+            background-color: #fff;
+        }
+
+        .job-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-color: #0073b1;
+        }
+
+        .job-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .job-location, .job-salary {
+            font-size: 1rem;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .job-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .apply-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: white;
+            background-color: #0073b1;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .apply-button:hover {
+            background-color: #005580;
+        }
+
+        footer {
+            background-color: #1c1c1c;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: #f7a308;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo-wrapper">
+            <a style="text-decoration: none; color: white;" href="HomePage.html">
+                <div class="logo">OnDesign</div>
+            </a>
+        </div>
+        <div class="menu-wrapper">
+            <div class="menu">
+                <a href="HomePage.html">Home</a>
+                <a href="Courses.html">Courses</a>
+                <a href="Jobs.html">Jobs</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="jobs-container">
+        <h1>Available Job Vacancies</h1>
+        <div id="jobs-list">
+            <!-- Jobs will be dynamically added here -->
+        </div>
+    </div>
+
+    <footer>
+        <div>&copy; 2024 OnDesign. All rights reserved.</div>
+        <div><a href="https://www.linkedin.com" target="_blank">LinkedIn</a></div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch('http://localhost:5000/api/jobs') // Adjust to your API endpoint
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch jobs');
+                    }
+                    return response.json();
+                })
+                .then(jobs => {
+                    const jobsList = document.getElementById('jobs-list');
+
+                    if (jobs.length === 0) {
+                        jobsList.innerHTML = '<p>No job vacancies available at the moment.</p>';
+                        return;
+                    }
+
+                    jobs.forEach(job => {
+                        const jobCard = document.createElement('div');
+                        jobCard.className = 'job-card';
+
+                        jobCard.innerHTML = `
+                            <h2 class="job-title">${job.title}</h2>
+                            <p class="job-location"><strong>Location:</strong> ${job.location}</p>
+                            <p class="job-salary"><strong>Salary:</strong> ${job.salary}</p>
+                            <p class="job-description">${job.description}</p>
+                            <a href="#" class="apply-button">Apply Now</a>
+                        `;
+
+                        jobsList.appendChild(jobCard);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching jobs:', error);
+                    document.getElementById('jobs-list').innerHTML = '<p>Failed to load job vacancies. Please try again later.</p>';
+                });
+        });
+    </script>
+</body>
+
+</html>

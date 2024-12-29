@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Course - Admin</title>
+    <style>
+      /* Global Styles */
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #333;
+      }
+
+      /* Container for the form */
+      .form-container {
+        width: 100%;
+        max-width: 600px;
+        padding: 40px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+        box-sizing: border-box;
+      }
+
+      /* Title Style */
+      .form-container h1 {
+        color: #093561;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      /* Form Inputs Style */
+      .form-container input[type="text"],
+      .form-container input[type="url"],
+      .form-container textarea {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+        box-sizing: border-box;
+      }
+
+      .form-container textarea {
+        resize: vertical;
+      }
+
+      /* Button Style */
+      .form-container button {
+        background: #093561;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .form-container button:hover {
+        background: #f7a308;
+      }
+
+      /* Back to Admin Home Button */
+      .back-btn {
+        display: block;
+        margin-top: 20px;
+        font-size: 1rem;
+        text-align: center;
+        color: #093561;
+        text-decoration: none;
+      }
+
+      .back-btn:hover {
+        text-decoration: underline;
+      }
+
+      /* Responsive design for smaller screens */
+      @media (max-width: 768px) {
+        .form-container {
+          padding: 20px;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="url"],
+        .form-container textarea {
+          padding: 10px;
+        }
+
+        .form-container button {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h1>Add New Course</h1>
+      <form id="add-course-form" enctype="multipart/form-data">
+        <input
+          type="text"
+          id="course-name"
+          placeholder="Course Name"
+          required
+        />
+        <textarea
+          id="course-description"
+          rows="4"
+          placeholder="Course Description"
+          required
+        ></textarea>
+        <input
+          type="text"
+          id="course-price"
+          placeholder="Course Price"
+          required
+        />
+        <input
+          type="text"
+          id="course-link"
+          placeholder="Course Link (URL)"
+          required
+        />
+        <input type="file" id="course-image" accept="image/*" required />
+        <button type="submit">Add Course</button>
+      </form>
+
+      <a href="adminhome.html" class="back-btn">Back to Admin Home</a>
+    </div>
+
+    <script>
+      document
+        .getElementById("add-course-form")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const name = document.getElementById("course-name").value;
+          const description =
+            document.getElementById("course-description").value;
+          const price = document.getElementById("course-price").value;
+          const link = document.getElementById("course-link").value;
+          const image = document.getElementById("course-image").files[0]; // Get the uploaded image
+
+          const formData = new FormData();
+          formData.append("name", name);
+          formData.append("description", description);
+          formData.append("price", price);
+          formData.append("link", link);
+          formData.append("image", image); // Append the image to the form data
+
+          try {
+            const response = await fetch("http://localhost:5000/admincourses", {
+              method: "POST",
+              body: formData, // Send form data including the image
+            });
+
+            if (response.ok) {
+              const data = await response.json();
+              alert("Course added successfully!");
+              window.location.href = "adminhome.html";
+            } else {
+              const data = await response.json();
+              alert(data.message || "Failed to add course");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert(
+              "Failed to add course. Please check the server connection and try again."
+            );
+          }
+        });
+    </script>
+  </body>
+</html>

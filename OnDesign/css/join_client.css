@@ -1,0 +1,99 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+}
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    margin-left: 50%;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.75rem;
+    cursor: pointer;
+}
+
+.option input {
+    display: none;
+}
+
+.option .icon {
+    font-size: 1.5rem;
+}
+
+.option .text {
+    font-size: 1rem;
+    flex: 1;
+    text-align: left;
+}
+
+.option input:checked + .icon,
+.option input:checked + .text:hover {
+color: #1bff1b;
+    font-weight: bold;
+}
+
+#joinButton {
+    background-color: #1c1c1c;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+#joinButton:hover {
+    background-color: #02c402;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+.text{
+
+    padding-top: 10% ;
+    padding-bottom: 10%;
+}

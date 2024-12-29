@@ -1,0 +1,384 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f9;
+}
+
+/* Navbar styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    background-color: #1c1c1c;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow */
+    margin: 0; /* Ensure no extra margin */
+}
+
+.navbar .logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar .logo {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.navbar .menu-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.navbar .menu {
+    display: flex;
+    gap: 30px;
+}
+
+.navbar .menu a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.navbar .menu a:hover {
+    color: #ffcc00;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown button {
+    background-color: #f7a308;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.dropdown button:hover {
+    background-color: #f9bb48;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 220px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: #004d99;
+    padding: 10px 15px;
+    display: block;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Sidebar styling */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #1c1c1c;
+    color: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    transition: left 0.3s ease;
+    padding-top: 60px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Added shadow for a modern look */
+}
+
+
+.sidebar.active {
+    left: 0;
+    background-size: contain;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: block;
+    transition: color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    color: #ffcc00;
+}
+
+.menu-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.menu-icon:hover {
+    color: #ffcc00;
+}
+
+.close-sidebar {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+    border: none;
+}
+
+.close-sidebar:hover {
+    color: #ffcc00;
+}
+
+/* Slideshow styling */
+.slideshow {
+    position: relative;
+    max-width: 100%;
+    height: 550px;
+    overflow: hidden;
+    margin: 0; /* Removed the gap by eliminating margin */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow */
+}
+
+.slideshow img {
+    width: 100%;
+    height: 100%;
+    object-fit:cover;
+    object-position: center;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slideshow img.active {
+    opacity: 1;
+}
+
+.slideshow .text {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    animation: fadeText 1s;
+}
+
+@keyframes fadeText {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.slideshow .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.slideshow .arrow:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+}
+
+.slideshow .arrow.left {
+    left: 10px;
+}
+
+.slideshow .arrow.right {
+    right: 10px;
+}
+
+.card-section {
+    padding: 20px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.card-section h2 {
+    margin-bottom: 20px;
+    color: #1c1c1c;
+    font-size: 1.8rem;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 0 40px;
+}
+
+.card {
+    position: relative;
+    background: #f4f4f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Make sure the card image is responsive and maintains its aspect ratio */
+.card img {
+    width: 100%; /* Ensures the image takes up the full width of the container */
+    height: 200px; /* Set a fixed height for the image */
+    object-fit: cover; /* This will make sure the image covers the area without distorting */
+    object-position: center; /* Centers the image within its container */
+    border-radius: 8px; /* Optional: adds rounded corners */
+}
+
+/* For a more responsive approach, especially when images have different aspect ratios */
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* This ensures the whole image is visible */
+    max-height: 200px; /* Optional: set a maximum height to prevent images from growing too large */
+}
+
+@media (max-width: 768px) {
+    .card img {
+        height: 150px; /* Smaller height for mobile */
+    }
+}
+
+@media (min-width: 769px) {
+    .card img {
+        height: 200px; /* Larger height for desktop */
+    }
+}
+
+
+.card video {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.card video {
+    display: none;
+}
+
+.card:hover video {
+    display: block;
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card-content h3 {
+    margin: 10px 0;
+    color: #093561;
+    font-size: 1.2rem;
+}
+
+.card-content .rating {
+    color: #ffcc00;
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+.card-content button {
+    background: #093561;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.card-content button:hover {
+    background: #f7a308;
+}
+
+.footer{
+    background-color: #1c1c1c;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); /* Shadow on top of footer */
+}
+
+.footer-logo {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: #f7a308;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #ffcc00;
+}
+

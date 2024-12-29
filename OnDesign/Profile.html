@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnDesign - Profile</title>
+    <link rel="stylesheet" href="HomePageStyles.css">
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-container h2 {
+            text-align: center;
+            color: #1c1c1c;
+            margin-bottom: 20px;
+        }
+
+        .profile-container .profile-pic {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-container .profile-pic img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .profile-container form label {
+            font-size: 1.1rem;
+            color: #1c1c1c;
+        }
+
+        .profile-container form input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+
+        .profile-container form input:focus {
+            border-color: #093561;
+        }
+
+        .profile-container form button {
+            padding: 10px 15px;
+            font-size: 1rem;
+            color: white;
+            background-color: #093561;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .profile-container form button:hover {
+            background-color: #f7a308;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-wrapper">
+            <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+            <a style="text-decoration: none;color: white;" href="HomePage.html"><div class="logo">OnDesign</div></a>
+        </div>
+        <div class="menu-wrapper">
+            <div class="menu">
+                <a href="HomePage.html">Home</a>
+                <a href="Courses.html">Courses</a>
+                <a href="Profile.html">Profile</a>
+            </div>
+            <div class="dropdown">
+                <button>Switch</button>
+                <div class="dropdown-content">
+                    <a href="JoinClient.html">Switch to Professional Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+        <button class="close-sidebar" onclick="toggleSidebar()">&times;</button>
+        <ul>
+            <li><a href="Profile.html">Profiles</a></li>
+            <li><a href="Courses.html">My Courses</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="profile-container">
+        <h2>User Profile</h2>
+        <div class="profile-pic" onclick="showOptions()">
+            <img src="img/profile-pic.jpg" alt="Profile Picture" id="profile-pic">
+            <input type="file" id="upload-pic" class="upload-btn" accept="image/*" onchange="uploadProfilePic(event)" style="display: none;">
+        </div>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="John Doe">
+    
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="john.doe@example.com">
+    
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-logo">OnDesign</div>
+        <div class="footer-links">
+            <a href="https://www.instagram.com" target="_blank">Instagram</a>
+            <a href="https://www.youtube.com" target="_blank">YouTube</a>
+            <a href="https://www.twitter.com" target="_blank">X (Twitter)</a>
+            <a href="https://www.whatsapp.com" target="_blank">WhatsApp</a>
+        </div>
+    </footer>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+        
+        function showOptions() {
+            const action = confirm("Click OK to upload a new profile picture or Cancel to delete the current one.");
+            if (action) {
+                // Trigger file input for upload
+                document.getElementById('upload-pic').click();
+            } else {
+                // Confirm delete action
+                const deleteConfirm = confirm("Are you sure you want to delete the current profile picture?");
+                if (deleteConfirm) {
+                    document.getElementById('profile-pic').src = "img/default-pic.jpg";
+                }
+            }
+        }
+
+        function uploadProfilePic(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profile-pic').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        function showOptions() {
+        const option = prompt("Type 'upload' to upload a new profile picture or 'delete' to remove the current picture.");
+
+        if (option && option.toLowerCase() === 'upload') {
+            document.getElementById('upload-pic').click();
+        } else if (option && option.toLowerCase() === 'delete') {
+            const deleteConfirm = confirm("Are you sure you want to delete the current profile picture?");
+            if (deleteConfirm) {
+                document.getElementById('profile-pic').src = "img/default-pic.jpg";
+            }
+        }
+    }
+    </script>
+</body>
+</html>

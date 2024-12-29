@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - OnDesign</title>
+    <style>
+      /* The styles remain unchanged */
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        overflow: hidden;
+      }
+
+      .login-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.9);
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        width: 350px;
+      }
+
+      .login-container h1 {
+        margin-bottom: 20px;
+        color: #093561;
+      }
+
+      .login-container input[type="email"],
+      .login-container input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+
+      .login-container .social-login {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+      }
+
+      .social-login button {
+        flex: 1;
+        margin: 0 5px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .social-login .google {
+        background-color: #db4437;
+        color: white;
+      }
+
+      .social-login .google:hover {
+        background-color: #c23321;
+      }
+
+      .social-login .facebook {
+        background-color: #4267b2;
+        color: white;
+      }
+
+      .social-login .facebook:hover {
+        background-color: #365899;
+      }
+
+      .social-login .twitter {
+        background-color: #1da1f2;
+        color: white;
+      }
+
+      .social-login .twitter:hover {
+        background-color: #0d95e8;
+      }
+
+      .login-container .login-btn {
+        width: 100%;
+        padding: 10px;
+        background: #093561;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, transform 0.2s;
+      }
+
+      .login-container .login-btn:hover {
+        background: #f7a308;
+      }
+
+      .login-container .login-btn:active {
+        transform: scale(0.98);
+      }
+
+      .login-container .link {
+        margin-top: 15px;
+        font-size: 0.9rem;
+      }
+
+      .login-container .link a {
+        color: #093561;
+        text-decoration: none;
+      }
+
+      .login-container .link a:hover {
+        text-decoration: underline;
+      }
+
+      .slideshow {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      .slideshow img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+      }
+
+      .slideshow img.active {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slideshow">
+      <img src="img/anime.jpg" class="active" />
+      <img src="img/anime2.jpeg" />
+      <img src="img/Professional-Graphic-Designer-.webp" />
+    </div>
+
+    <div class="login-container">
+      <h1>Login</h1>
+      <form id="login-form">
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <div class="link">
+          Don't have an account? <a href="ad">Click here to create account</a>
+        </div>
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+
+      <div class="social-login">
+        <button class="google" onclick="loginWithGoogle()">
+          Login with Google
+        </button>
+        <button class="facebook" onclick="loginWithFacebook()">
+          Login with Facebook
+        </button>
+        <button class="twitter" onclick="loginWithTwitter()">
+          Login with Twitter
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // Handling the slideshow
+      const images = document.querySelectorAll(".slideshow img");
+      let current = 0;
+
+      function changeSlide() {
+        images[current].classList.remove("active");
+        current = (current + 1) % images.length;
+        images[current].classList.add("active");
+      }
+
+      setInterval(changeSlide, 4000);
+
+      // Handle Login Form submission
+      document.getElementById('login-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+          const response = await fetch('http://localhost:5000/ownerlogin', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+          });
+
+          const data = await response.json();
+          if (response.ok) {
+            alert('Login successful!');
+            // Redirect to Owner Dashboard or other page
+            window.location.href = 'adminhome.html';  // Adjust as needed
+          } else {
+            alert(data.message || 'Login failed');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Server error occurred. Please try again later.');
+        }
+      });
+
+      // Social Media login redirection
+      function loginWithGoogle() {
+        // Redirect to Google OAuth login
+        window.location.href =
+          "https://accounts.google.com/o/oauth2/auth?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code&scope=openid%20email%20profile&prompt=select_account";
+      }
+
+      function loginWithFacebook() {
+        // Redirect to Facebook OAuth login
+        window.location.href =
+          "https://www.facebook.com/v12.0/dialog/oauth?client_id=YOUR_APP_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code&scope=email";
+      }
+
+      function loginWithTwitter() {
+        // Redirect to Twitter OAuth login
+        window.location.href =
+          "https://twitter.com/i/oauth2/authorize?response_type=code&client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=tweet.read%20users.read%20offline.access&state=YOUR_STATE&code_challenge=YOUR_CODE_CHALLENGE&code_challenge_method=plain";
+      }
+    </script>
+  </body>
+</html>
