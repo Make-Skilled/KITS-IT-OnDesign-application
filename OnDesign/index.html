@@ -70,7 +70,7 @@
                 const cardContainer = document.querySelector('.card-container');
             
                 // Fetch courses from the server
-                fetch('http://localhost:5000/api/courses')
+                fetch('https://on-design-api.onrender.com/api/courses')
                     .then(response => response.json())
                     .then(courses => {
                         // Loop through the courses and create a card for each
@@ -80,7 +80,7 @@
             
                             // Set inner HTML for the card with course details
                             card.innerHTML = `
-                                <img src="http://localhost:5000${course.image}" alt="${course.name}">
+                                <img src="https://on-design-api.onrender.com${course.image}" alt="${course.name}">
                                 <div class="card-content">
                                     <h3>${course.name}</h3>
                                     <div class="rating">${generateStars()}</div>
