@@ -260,7 +260,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const courseId = urlParams.get('id');
 
-            fetch(`http://localhost:5000/api/courses/${courseId}`)
+            fetch(`https://ondesignbackend.makeskilled.com/api/courses/${courseId}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
