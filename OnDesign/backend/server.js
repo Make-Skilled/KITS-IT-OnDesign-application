@@ -6,6 +6,16 @@ const multer = require('multer');
 const path = require('path');
 require('dotenv').config();
 
+
+const fs = require('fs');
+
+// Ensure the uploads directory exists
+const uploadDir = 'uploads';
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir);
+    console.log(`Created directory: ${uploadDir}`);
+}
+
 const app = express();
 const PORT = process.env.PORT || 3002;
 
@@ -17,7 +27,8 @@ app.use('/uploads', express.static('uploads')); // Serve static files from 'uplo
 // Setup for file uploads using multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/');  // Store files in the 'uploads' directory
+    cb(null, path.join(__dirname, 'uploads'));
+  // Store files in the 'uploads' directory
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname));  // Unique filename
