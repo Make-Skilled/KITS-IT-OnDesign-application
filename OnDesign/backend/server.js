@@ -147,7 +147,7 @@ app.post('/ownerlogin', async (req, res) => {
 
 app.post('/admincourses', upload.single('image'), async (req, res) => {
     const { name, description, price, link } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : null;  
+    const image = req.file ? path.resolve(__dirname, 'uploads', req.file.filename) : null;  
   
     if (!name || !description || !price || !link) {
       return res.status(400).json({ message: 'All fields are required' });
