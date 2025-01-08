@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnDesign - Home</title>
+    <link rel="stylesheet" href="/css/HomePageStyles.css">
+</head>
+
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>OnDesign - Home</title>
+        <link rel="stylesheet" href="css/HomePageStyles.css">
+    </head>
+
+    <body>
+        <div class="navbar">
+            <div class="logo-wrapper">
+                <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+                <a style="text-decoration: none;color: white;" href="userhome.html">
+                    <div class="logo">OnDesign</div>
+                </a>
+            </div>
+            <div class="menu-wrapper">
+                <div class="menu">
+                    <a href="userhome.html">Home</a>
+                    <a href="#courses">Courses</a>
+                    <a href="jobs provid.html">Jobs</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="slideshow">
+            <img src="img/anime.jpg" alt="Image 1" class="active">
+            <img src="img/Professional-Graphic-Designer-.webp" alt="Image 2">
+            <img src="img/paint.jpg" alt="Image 3">
+            <div class="text" id="slideshow-text">Welcome to OnDesign</div>
+            <div class="arrow left" onclick="prevSlide()">&#8249;</div>
+            <div class="arrow right" onclick="nextSlide()">&#8250;</div>
+        </div>
+
+        <!-- Page Content -->
+
+        <!-- Course Cards Section -->
+        <div class="card-section" id="courses">
+            <h2>Explore Our Courses</h2>
+            <div class="card-container">
+                <!-- Cards will be dynamically created using JavaScript -->
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <div class="footer-logo">OnDesign</div>
+            <div class="footer-links">
+                <a href="https://www.instagram.com" target="_blank">Instagram</a>
+                <a href="https://www.youtube.com" target="_blank">YouTube</a>
+                <a href="https://www.twitter.com" target="_blank">X (Twitter)</a>
+                <a href="https://www.whatsapp.com" target="_blank">WhatsApp</a>
+            </div>
+        </footer>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const cardContainer = document.querySelector('.card-container');
+            
+                // Fetch courses from the server
+                fetch('https://ondesignbackend.makeskilled.com/api/courses')
+                    .then(response => response.json())
+                    .then(courses => {
+                        // Loop through the courses and create a card for each
+                        courses.forEach(course => {
+                            const card = document.createElement('div');
+                            card.classList.add('card');
+            
+                            // Set inner HTML for the card with course details
+                            card.innerHTML = `
+                                <img src="https://on-design-api.onrender.com${course.image}" alt="${course.name}">
+                                <div class="card-content">
+                                    <h3>${course.name}</h3>
+                                    <div class="rating">${generateStars()}</div>
+                                    <a href="BuyCourse.html?id=${course._id}" style="text-decoration: none;">
+                                        <button style="background-color: #1c1c1c;">View Course</button>
+                                    </a>
+                                </div>
+                            `;
+            
+                            cardContainer.appendChild(card);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching courses:', error);
+                    });
+            
+                // Function to generate random star ratings for the courses
+                function generateStars() {
+                    const stars = Math.floor(Math.random() * 5) + 1;
+                    return '★'.repeat(stars) + '☆'.repeat(5 - stars);
+                }
+            });            
+        </script>
+    </body>
+
+    </html>
