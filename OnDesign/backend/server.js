@@ -62,6 +62,11 @@ const jobSchema = new mongoose.Schema({
 
 const Job = mongoose.model('Job', jobSchema);
 
+
+app.get('/',async(req,res)=>{
+    res.send({message:"APP is running successfully"});
+})
+
 // POST route for user registration
 app.post('/api/register', async (req, res) => {
     const { firstName, lastName, email, password, country } = req.body;
