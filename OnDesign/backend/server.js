@@ -26,13 +26,12 @@ app.use('/uploads', express.static('uploads')); // Serve static files from 'uplo
 
 // Setup for file uploads using multer
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, 'uploads'));
-  // Store files in the 'uploads' directory
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));  // Unique filename
-  }
+    destination: function (req, file, cb) {
+      cb(null, path.join(__dirname, 'uploads')); // Use absolute path
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
+    }
 });
 
 const upload = multer({ storage: storage });
