@@ -22,7 +22,8 @@ const PORT = process.env.PORT || 3002;
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());  // To parse JSON requests
-app.use('/uploads', express.static('uploads')); // Serve static files from 'uploads' folder
+app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')));
+ // Serve static files from 'uploads' folder
 
 // Setup for file uploads using multer
 const storage = multer.diskStorage({
